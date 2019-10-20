@@ -17,11 +17,10 @@ import java.util.Stack;
  */
 public class Parser {
     private Map<Character, Integer> precedencia;
+    public String aux;
    
-    Parser(){
-        Map<Character, Integer> map = new HashMap<>();
-        Scanner scanner = new Scanner(System.in);
-        String expresion;
+    Parser(String expresion){
+        Map<Character, Integer> map = new HashMap<>();        
         
         map.put('(', 1);
         map.put('|', 2);
@@ -29,12 +28,7 @@ public class Parser {
         map.put('*', 4);
         precedencia = Collections.unmodifiableMap(map);
         
-        System.out.println("Ingrese una expresion regular:");
-        expresion = scanner.nextLine();
-        
-        String aux = convertir_expresion(expresion);
-        
-        System.out.println("Expresion nueva: " + aux);
+        setAux(convertir_expresion(expresion));                        
     }
     
     String convertir_expresion(String expresion){
@@ -95,4 +89,13 @@ public class Parser {
         
         return precedencia_char;
     }
+
+    public String getAux() {
+        return aux;
+    }
+
+    public void setAux(String aux) {
+        this.aux = aux;
+    }
+        
 }

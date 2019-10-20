@@ -5,8 +5,6 @@
  */
 package t1;
 
-import static java.lang.System.exit;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -14,7 +12,7 @@ import java.util.Scanner;
  * @author matiassebastianparra
  */
 public class T1 {
-
+    
     /**
      * @param args the command line arguments
      */
@@ -24,42 +22,34 @@ public class T1 {
         System.out.println("Ingrese una ER:");
         System.out.println("Se permiten las letras del alfabeto inglés en mayúsculas o minúsculas. Los operadores son .,|,*");                
         String expresion = scanner.nextLine(); 
-       
-        String[] lista = expresion.split("[.|*]");
         
-        if(expresion.contains(".")){                        
-            concatenacion(lista);
-        }
-        else if(expresion.contains("|")){                        
-            union(lista);
-        }
-        else if(expresion.contains("*")){                        
-            estrella(lista);
-        }
-        /*for (String a : lista){ 
-            System.out.println(a);
-        }*/
+        Parser parseo = new Parser(expresion);
+        
+        System.out.println("Expresion nueva: " + parseo.getAux());
+        
     }
     
-    static public void concatenacion(String[] lista){
+    
+    
+    static public void concatenacion(String texto1, String texto2){
         System.out.println("Concatenación");
-        System.out.printf(lista[0]);
-        System.out.printf(".");
-        System.out.println(lista[1]);
+        System.out.println(texto1);
+        System.out.println(".");
+        System.out.println(texto2);
     }
     
-    static public void union(String[] lista){
-       System.out.println("Unión");
-       System.out.printf(lista[0]);
-       System.out.printf("|");
-       System.out.println(lista[1]); 
+    static public void union(String texto1, String texto2){
+       System.out.println("Unión"); 
+       System.out.println(texto1);
+        System.out.println("|");
+        System.out.println(texto2);
     }
     
-    static public void estrella(String[] lista){
+    static public void estrella(String texto1, String texto2){
         System.out.println("Estrella de Kleene");
-        System.out.printf(lista[0]);
-        System.out.printf("*");
-        System.out.println(lista[1]);
+        System.out.println(texto1);
+        System.out.println("*");
+        System.out.println(texto2);
     }
     
 }
