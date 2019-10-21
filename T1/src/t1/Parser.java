@@ -16,6 +16,7 @@ import java.util.Stack;
  * @author Mn_go
  */
 public class Parser {
+    
     private Map<Character, Integer> precedencia;
     public String aux;
    
