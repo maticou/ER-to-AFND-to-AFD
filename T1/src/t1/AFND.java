@@ -107,6 +107,9 @@ public class AFND {
             union.estados.get(i).id = i;
         }
         
+        union.inicio = inicio;
+        union.agregarEstadoFinal(fin);
+        
         this.pila.push(union);
     }
     
@@ -153,6 +156,7 @@ public class AFND {
         inicial.agregarTransicion('Ɛ', fin);
         
         automata.finales.get(0).agregarTransicion('Ɛ', fin);
+        automata.finales.get(0).agregarTransicion('Ɛ', automata.inicio);
         
         kleene.setEstadoInicio(inicial);
         kleene.agregarEstadoFinal(fin);
