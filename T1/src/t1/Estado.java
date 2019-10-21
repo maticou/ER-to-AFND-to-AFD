@@ -6,33 +6,53 @@
 package t1;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
  * @author matiassebastianparra
  */
 public class Estado {
+    int id;
+    boolean inicio;
+    boolean fin;
+    HashMap<Character, ArrayList<Estado>> transiciones;
     
-    int id;   
-    
-    ArrayList<Transicion> transiciones = new ArrayList();
-
-    public Estado(int id) {
-        
-        this.id = id;                
-    }   
-      
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
+    Estado(int id, boolean inicio, boolean fin){
         this.id = id;
-    }    
-    
-    public boolean agregarTransiciones(Transicion tran){        
-        return transiciones.add(tran);
+        this.inicio = inicio;
+        this.fin = fin;
+        transiciones = new HashMap<Character, ArrayList<Estado>>();
     }
     
+    void setID( int id){
+        this.id = id;
+    }
+    
+    void setInicio(boolean inicio){
+        this.inicio = inicio;
+    }
+    
+    void setFin(boolean fin){
+        this.fin = fin;
+    }
+    
+    void agregarTransicion(char c, Estado nuevo_estado){
+        if(transiciones.containsKey(c) == false){
+            ArrayList<Estado> estados = new ArrayList<Estado>();
+            estados.add(nuevo_estado);
+            this.transiciones.put(c, estados);
+        }
+        else{
+            this.transiciones.get(c).add(nuevo_estado);
+        }
+    }
+    
+    void imprimir_transiciones(){
+        for (Character i : transiciones.keySet()) {
+            for(Estado estado: transiciones.get(i)){
+                System.out.println("{"+" q"+ this.id+ ", " + i + "," + "q" +estado.id + " }");
+            }
+        }
+    }
 }

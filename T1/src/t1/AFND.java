@@ -12,228 +12,163 @@ import java.util.Stack;
  *
  * @author matiassebastianparra
  */
-public class AFND {            
-    Transicion transicion;
+public class AFND {
     Automata automata;
+    Stack<Automata> pila = new Stack();
     String expresion;
-
-    ArrayList<String> alfabeto;
     
-    public AFND(String expresion){
-        
+    AFND(String expresion){
         this.expresion = expresion;
-        this.alfabeto = new ArrayList();
-        
-        inicioAFND();
-
-    }
-
-   public void inicioAFND(){
-       
-       Stack pila = new Stack();
-       Automata auto1, auto2, autok;
-       
-       for(int i=0;i<this.expresion.length();i++){
-           char c = this.expresion.charAt(i);           
-           switch(c){
-               case '*':
-                   autok = estrellaKleene((Automata)pila.pop());
-                   pila.push(autok);
-                   this.automata = autok;
-                   break;
-               case '.':
-                   auto1 = (Automata) pila.pop();
-                   auto2 = (Automata) pila.pop();                   
-                   Automata resultadoConcatenacion = concatenacion(auto1, auto2);
-                   pila.push(resultadoConcatenacion);
-                   this.automata = resultadoConcatenacion;
-                   break;
-               case '|':
-                   auto1 = (Automata) pila.pop();
-                   auto2 = (Automata) pila.pop();                   
-                   Automata resultadoUnion = union(auto1, auto2);
-                   pila.push(resultadoUnion);
-                   this.automata = resultadoUnion;
-                   break;               
-               case '_':
-                   Automata vacio = automataVacio();
-                   pila.push(vacio);
-                   this.automata = vacio;
-                   break;
-               default:
-                   Automata autoLetra = automataLetra(c);
-                   pila.push(autoLetra);
-                   this.automata = autoLetra;
-                   break;
-           }
-       }       
-   }
-
-    private Automata concatenacion(Automata auto1, Automata auto2) {
-        
-        Automata ac = new Automata();
-        int i;
-        for(i=0;i<auto2.getListaEstados().size();i++){
-            Estado estado1 = auto2.getListaEstados().get(i);
-            estado1.setId(i);
-            if(i == 0){
-                ac.setEstadoInicial(estado1);
-            }
-            if(i == auto2.getListaEstados().size()-1){
-                for(int j=0;j<auto2.getListaEstadosFinales().size();j++){
-                    Transicion tran = new Transicion(auto2.getListaEstadosFinales().get(j), auto1.getEstadoInicial(), "_");
-                    estado1.agregarTransiciones(tran);
-                }
-            }                        
-            ac.setListaEstados(estado1);
-        }
-        
-        for(int k=0;k<auto1.getListaEstados().size();k++){
-            Estado estado2 = auto1.getListaEstados().get(k);
-            estado2.setId(i);
-            
-            if(auto1.getListaEstados().size()-1 == k){
-                ac.setListaEstadosFinales(estado2);
-            }
-            ac.setListaEstados(estado2);
-            i++;
-        }
-        return ac;
-    }
-
-    private Automata automataLetra(char c) {
-        
-        Automata al = new Automata();
-        Estado inicio = new Estado(0);
-        Estado fin = new Estado(1);
-        Transicion trans = new Transicion(inicio, fin, String.valueOf(c));
-        inicio.agregarTransiciones(trans);
-        al.setListaEstados(inicio);
-        al.setListaEstados(fin);
-        al.setEstadoInicial(inicio);
-        al.setListaEstadosFinales(fin);
-        return al;
-    }
-
-    private Automata union(Automata auto1, Automata auto2) {
-        Automata au = new Automata();
-        Estado inicio = new Estado(0);
-        Transicion trans = new Transicion(inicio, auto2.getEstadoInicial(), "_");
-        inicio.agregarTransiciones(trans);
-        au.setListaEstados(inicio);
-        au.setEstadoInicial(inicio);
-        
-        int cont;
-        for(cont=0;cont<auto1.getListaEstados().size();cont++){
-            Estado estado1 = auto1.getListaEstados().get(cont);
-            estado1.setId(cont+1);
-            au.setListaEstados(estado1);            
-        }
-        for(int i=0;i<auto2.getListaEstados().size();i++){
-            Estado estado2 = auto2.getListaEstados().get(i);
-            estado2.setId(cont+1);
-            au.setListaEstados(estado2);
-            cont++;
-        }
-        Estado fin = new Estado(auto1.getListaEstados().size() + auto2.getListaEstados().size() + 1);
-        au.setListaEstados(fin);
-        au.setListaEstadosFinales(fin);
-        Estado inicioPrevio = auto1.getEstadoInicial();
-        ArrayList<Estado> finalAnterior1 = auto1.getListaEstadosFinales();
-        ArrayList<Estado> finalAnterior2 = auto2.getListaEstadosFinales();
-        Transicion trans2 = new Transicion(inicio, inicioPrevio, "_");
-        inicio.transiciones.add(trans2);
-        
-        for(int j=0;j<finalAnterior1.size();j++){
-            trans2 = new Transicion(finalAnterior1.get(j), fin, "_");
-            finalAnterior1.get(j).transiciones.add(trans2);
-        }
-        for(int k=0;k<finalAnterior2.size();k++){
-            trans2 = new Transicion(finalAnterior2.get(k), fin, "_");
-            finalAnterior2.get(k).transiciones.add(trans2);
-        }
-        
-        return au;
-    }
-
-    private Automata estrellaKleene(Automata automata) {
-        Automata ak = new Automata();
-        Estado inicio = new Estado(0);        
-        ak.setListaEstados(inicio);
-        ak.setEstadoInicial(inicio);
-        for(int i=0;i<automata.getListaEstados().size();i++){
-            Estado estado3 = automata.getListaEstados().get(i);
-            estado3.setId(i+1);
-            ak.setListaEstados(estado3);
-        }
-        Estado fin = new Estado(automata.getListaEstados().size()+1);
-        ak.setListaEstados(fin);
-        ak.setListaEstadosFinales(fin);
-        Estado inicioPrevio = automata.getEstadoInicial();
-        ArrayList<Estado> finalPrevio = automata.getListaEstadosFinales();
-        inicio.transiciones.add(new Transicion(inicio, inicioPrevio, "_"));
-        inicio.transiciones.add(new Transicion(inicio, fin, "_"));
-        
-        for(int i=0;i<finalPrevio.size();i++){
-            finalPrevio.get(i).transiciones.add(new Transicion(finalPrevio.get(i), inicioPrevio, "_"));
-            finalPrevio.get(i).transiciones.add(new Transicion(finalPrevio.get(i), fin, "_"));
-        }
-        
-        return ak;
-    }
-
-    private Automata automataVacio() {
-        Automata auto5 = new Automata();
-        Estado inicio = new Estado(0);
-        Estado fin = new Estado(1);
-        auto5.setListaEstados(inicio);
-        auto5.setListaEstados(fin);
-        auto5.setEstadoInicial(inicio);
-        auto5.setListaEstadosFinales(fin);
-        return auto5;
+        this.generar_automata();
     }
     
-    public ArrayList<String> getAlfabeto() {
-        for (Character c: this.expresion.toCharArray()){           
-            if (c != '|' && c != '*' && c != '.' && c != '_' && c!='0'){
-                if(!this.alfabeto.contains(Character.toString(c))){
-                    this.alfabeto.add(Character.toString(c));
-                }             
+    void generar_automata(){
+        for(char c: expresion.toCharArray()){
+            switch(c){
+                case '.':
+                    this.generar_automata_concatenacion();
+                    break;
+                case '|':
+                    this.generar_automata_union();
+                    break;
+                case '*':
+                    this.generar_automata_kleene();
+                    break;
+                default:
+                    generar_automata_basico(c);
+                    break;
             }
         }
-        return this.alfabeto;
+        
+        this.automata = this.pila.pop();
     }
     
-    public void imprimirAFND(){
-        System.out.println("AFND:");
+    void imprimir_automata(){
+        System.out.println("AFND");
         System.out.printf("K = {");
-        for(int i= 0; i<this.automata.getListaEstados().size();i++){
-            if(i == this.automata.getListaEstados().size()-1){
-                System.out.printf("q"+this.automata.getListaEstados().get(i).getId() + "}");  
-            }else{
-                System.out.printf("q" + this.automata.getListaEstados().get(i).getId() + ", ");                
-            }            
+        for(Estado estado: this.automata.estados){
+            System.out.printf("q"+estado.id+" ,");
         }
-        System.out.println("");
-        System.out.printf("Sigma = ");
-        System.out.println(getAlfabeto());
-        System.out.println("Delta: ");
-        for (int i =0 ; i<this.automata.getListaEstados().size();i++){
-            Estado estado6 = this.automata.getListaEstados().get(i);
-            
-            for (int j = 0; j < estado6.transiciones.size(); j++){
-                System.out.println("(q" + estado6.transiciones.get(j).estadoInicio.getId() + ", " + estado6.transiciones.get(j).elemento + ", q" + estado6.transiciones.get(j).estadoFin.getId() + ")");                
-            }             
-        }
-        System.out.println("s={q" + this.automata.estadoInicial.getId() + "}");
+        System.out.printf("}");
+        System.out.println(" ");
+        System.out.println("Delta");
         
-        System.out.printf("F={");
-        for(int i= 0; i<this.automata.listaEstadosFinales.size();i++){
-            if(i == this.automata.listaEstadosFinales.size()-1){
-                System.out.printf("q" + this.automata.listaEstadosFinales.get(i).getId() + "}");                
-            }else{
-                System.out.printf("q" + this.automata.listaEstadosFinales.get(i).getId() + ", ");                
-            }            
-        }        
-    }    
+        for(Estado estado: this.automata.estados){
+            estado.imprimir_transiciones();
+        }
+    }
+    
+    void generar_automata_basico(char c){
+        Automata basico =  new Automata();
+        Estado estado1 =  new Estado(0, true, false);
+        Estado estado2 =  new Estado(1, false, true);
+        
+        estado1.agregarTransicion(c, estado2);
+        
+        basico.agregarEstado(estado1);
+        basico.agregarEstado(estado2);
+        
+        basico.setEstadoInicio(estado1);
+        basico.agregarEstadoFinal(estado2);
+        
+        this.pila.push(basico);
+    }
+    
+    void generar_automata_union(){
+        Automata automata2 = this.pila.pop();
+        Automata automata1 = this.pila.pop();
+        Automata union =  new Automata();
+        
+        Estado inicio = new Estado(0, true, false);
+        Estado fin = new Estado(0, false, true);
+        
+        inicio.agregarTransicion('Ɛ', automata1.inicio);
+        inicio.agregarTransicion('Ɛ', automata2.inicio);
+        
+        automata1.finales.get(0).agregarTransicion('Ɛ', fin);
+        automata2.finales.get(0).agregarTransicion('Ɛ', fin);
+        
+        //se agregan los estados que conformaran el nuevo automata 
+        //para luego modificar sus id
+        union.agregarEstado(inicio);
+        
+        for(Estado estado: automata1.estados){
+            union.agregarEstado(estado);
+        }
+        
+        for(Estado estado: automata2.estados){
+            union.agregarEstado(estado);
+        }
+        
+        union.agregarEstado(fin);
+        
+        //se actualizan los id
+        for(int i = 0; i < union.estados.size(); i++){
+            union.estados.get(i).id = i;
+        }
+        
+        this.pila.push(union);
+    }
+    
+    void generar_automata_concatenacion(){
+        Automata automata1;
+        Automata automata2;
+        Automata concatenacion =  new Automata();
+        
+        automata2 = this.pila.pop();
+        automata1 = this.pila.pop();
+        
+        //se crea la transicion entre los dos automatas.
+        automata1.finales.get(0).agregarTransicion('Ɛ', automata2.inicio);
+        
+        //se agregan todos los estados al automata de concatenacion.
+        for(Estado estado: automata1.estados){
+            concatenacion.agregarEstado(estado);
+        }
+        
+        for(Estado estado: automata2.estados){
+            concatenacion.agregarEstado(estado);
+        }
+        
+        //se definen los estados de inicio y fin del nuevo automata
+        concatenacion.setEstadoInicio(automata1.inicio);
+        concatenacion.finales.addAll(automata2.finales);
+        
+        //se actualizan los id de los estados para el nuevo automata generado
+        for(int i = 0; i < concatenacion.estados.size(); i++){
+            concatenacion.estados.get(i).id = i;
+        }
+        
+        this.pila.push(concatenacion);
+    }
+    
+    void generar_automata_kleene(){
+        Automata automata = this.pila.pop();
+        Automata kleene = new Automata();
+        
+        Estado inicial = new Estado(0, true, false);
+        Estado fin = new Estado(0, false, true);
+        
+        inicial.agregarTransicion('Ɛ', automata.inicio);
+        inicial.agregarTransicion('Ɛ', fin);
+        
+        automata.finales.get(0).agregarTransicion('Ɛ', fin);
+        
+        kleene.setEstadoInicio(inicial);
+        kleene.agregarEstadoFinal(fin);
+        
+        kleene.agregarEstado(inicial);
+        
+        for(Estado estado: automata.estados){
+            kleene.agregarEstado(estado);
+        }
+        
+        kleene.agregarEstado(fin);
+        
+        for(int i = 0; i < kleene.estados.size(); i++){
+            kleene.estados.get(i).id = i;
+        }
+        
+        this.pila.push(kleene);
+    }
 }

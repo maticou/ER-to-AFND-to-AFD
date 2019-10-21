@@ -28,8 +28,7 @@ public class T1 {
         System.out.println("Expresion nueva: " + parseo.getAux());
         
         afnd = new AFND(parseo.getAux());
-        afnd.imprimirAFND();
-        
+        afnd.imprimir_automata();
     }
     
     
