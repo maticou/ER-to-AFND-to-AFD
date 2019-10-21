@@ -12,7 +12,7 @@ import java.util.Scanner;
  * @author matiassebastianparra
  */
 public class T1 {
-    
+    static public AFND afnd;
     /**
      * @param args the command line arguments
      */
@@ -26,6 +26,9 @@ public class T1 {
         Parser parseo = new Parser(expresion);
         
         System.out.println("Expresion nueva: " + parseo.getAux());
+        
+        afnd = new AFND(parseo.getAux());
+        afnd.imprimirAFND();
         
     }
     
