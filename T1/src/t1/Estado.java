@@ -13,23 +13,15 @@ import java.util.ArrayList;
  */
 public class Estado {
     
-    int id;
-    boolean estadoInicial;
-    boolean estadoFinal;
+    int id;   
     
-    ArrayList<Transicion> transiciones;
+    ArrayList<Transicion> transiciones = new ArrayList();
 
     public Estado(int id) {
         
-        this.id = id;
-        if(id == 0){
-            this.estadoInicial = true;
-        }else{
-            this.estadoInicial = false;
-        }
-        
-        this.estadoFinal = false;
-    }        
+        this.id = id;                
+    }   
+      
 
     public int getId() {
         return id;
@@ -37,22 +29,10 @@ public class Estado {
 
     public void setId(int id) {
         this.id = id;
+    }    
+    
+    public boolean agregarTransiciones(Transicion tran){        
+        return transiciones.add(tran);
     }
-
-    public boolean isEstadoInicial() {
-        return estadoInicial;
-    }
-
-    public void setEstadoInicial(boolean estadoInicial) {
-        this.estadoInicial = estadoInicial;
-    }
-
-    public boolean isEstadoFinal() {
-        return estadoFinal;
-    }
-
-    public void setEstadoFinal(boolean estadoFinal) {
-        this.estadoFinal = estadoFinal;
-    }        
     
 }

@@ -17,35 +17,11 @@ public class Transicion {
     Estado estadoFin;    
     String elemento;     
     
-    public Transicion(int id1, int id2, String elemento) {
+    public Transicion(Estado estadoInicio, Estado estadoFin, String elemento) {
         
-        this.estadoInicio = new Estado(id1);
-        this.estadoFin = new Estado(id2);
+        this.estadoInicio = estadoInicio;
+        this.estadoFin = estadoFin;
         this.elemento = elemento;        
     }
 
-    public Estado getEstadoInicio() {
-        return estadoInicio;
-    }
-
-    public void setEstadoInicio(Estado estadoInicio) {
-        this.estadoInicio = estadoInicio;
-    }
-
-    public Estado getEstadoFin() {
-        return estadoFin;
-    }
-
-    public void setEstadoFin(Estado estadoFin) {
-        this.estadoFin = estadoFin;
-    }
-
-    public String getElemento() {
-        return elemento;
-    }
-
-    public void setElemento(String elemento) {
-        this.elemento = elemento;
-    }        
-            
 }

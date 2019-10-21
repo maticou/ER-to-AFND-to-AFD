@@ -33,54 +33,5 @@ public class AFD {
         this.finales = new ArrayList();
     }
 
-    public Transicion getTransicion() {
-        return transicion;
-    }
-
-    public void setTransicion(Transicion transicion) {
-        this.transicion = transicion;
-    }
-
-    public ArrayList<Estado> getListaEstados() {
-        return listaEstados;
-    }
-
-    public void setListaEstados(ArrayList<Estado> listaEstados) {
-        this.listaEstados = listaEstados;
-    }
-
-    public ArrayList<Transicion> getListaTransiciones() {
-        return listaTransiciones;
-    }
-
-    public void setListaTransiciones(ArrayList<Transicion> listaTransiciones) {
-        this.listaTransiciones = listaTransiciones;
-    }
-
-    public ArrayList<String> getAlfabeto() {
-        return alfabeto;
-    }
-
-    public void setAlfabeto(ArrayList<String> alfabeto) {
-        this.alfabeto = alfabeto;
-    }
-
-    public ArrayList<String> getInicios() {
-        return inicios;
-    }
-
-    public void setInicios(ArrayList<String> inicios) {
-        this.inicios = inicios;
-    }
-
-    public ArrayList<String> getFinales() {
-        return finales;
-    }
-
-    public void setFinales(ArrayList<String> finales) {
-        this.finales = finales;
-    }
-    
-    
             
 }

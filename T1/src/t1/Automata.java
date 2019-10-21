@@ -13,17 +13,38 @@ import java.util.ArrayList;
  */
 public class Automata {
     
-    String identificador;
     Estado estadoInicial;
-    Estado estadoFin;  
-    ArrayList<Transicion> listaTransiciones;
+ 
+    ArrayList<Estado> listaEstados;
+    ArrayList<Estado> listaEstadosFinales;
 
-    public Automata(String identificador, int estadoInicial, int estadoFin, ArrayList<Transicion> listaTransiciones) {
-        
-        this.identificador = identificador;        
-        this.estadoInicial = new Estado(estadoInicial);
-        this.estadoFin = new Estado(estadoFin);
-        this.listaTransiciones = new ArrayList();
+    public Automata() {        
+        this.listaEstados = new ArrayList();
+        this.listaEstadosFinales = new ArrayList();
+    }    
+
+    public Estado getEstadoInicial() {
+        return estadoInicial;
+    }
+
+    public void setEstadoInicial(Estado estadoInicial) {
+        this.estadoInicial = estadoInicial;
+    }
+
+    public ArrayList<Estado> getListaEstados() {
+        return listaEstados;
+    }
+
+    public void setListaEstados(Estado estados) {
+        this.listaEstados.add(estados);
+    }
+
+    public ArrayList<Estado> getListaEstadosFinales() {
+        return listaEstadosFinales;
+    }
+
+    public void setListaEstadosFinales(Estado estadosFinales) {
+        this.listaEstadosFinales.add(estadoInicial);
     }
     
     
