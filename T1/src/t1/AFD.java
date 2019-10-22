@@ -14,27 +14,7 @@ import java.util.Stack;
  */
 public class AFD {
     
-    Automata automata;
-    ArrayList<String> alfabeto;
-    ArrayList<String> inicios;
-    ArrayList<String> finales;
-    Automata afnd;
-    ArrayList<Estado> estados_epsilon;
-    
     public AFD(Automata automata) {
           
-    }
-
-        this.listaEstados = new ArrayList();
-        this.listaTransiciones = new ArrayList();
-        this.alfabeto = new ArrayList();
-        this.inicios = new ArrayList();
-        this.finales = new ArrayList();
-        
-        this.afnd = automata;
-        estados_epsilon =  new ArrayList<Estado>();
-        obtener_eclosure();
-    }
-
-            
+    }          
 }
