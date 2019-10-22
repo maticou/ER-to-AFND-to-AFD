@@ -21,8 +21,10 @@ public class AFD {
     ArrayList<String> alfabeto;
     ArrayList<String> inicios;
     ArrayList<String> finales;
-        
-    public AFD() {
+    Automata afnd;
+    ArrayList<Estado> estados_epsilon;
+    
+    public AFD(Automata automata) {
           
         //this.transicion = new Transicion();
 
@@ -31,6 +33,31 @@ public class AFD {
         this.alfabeto = new ArrayList();
         this.inicios = new ArrayList();
         this.finales = new ArrayList();
+        
+        this.afnd = automata;
+        estados_epsilon =  new ArrayList<Estado>();
+        obtener_eclosure();
+    }
+    
+    void convertir_automata(){
+        
+    }
+    
+    void obtener_eclosure(){
+        transicion_epsilon(afnd.inicio);
+    }
+    
+    void transicion_epsilon(Estado estado){
+        
+        if(estados_epsilon.contains(estado) == false){
+            this.estados_epsilon.add(estado);
+            
+            if(estado.transiciones.get('Ɛ') != null){
+                for(Estado s: estado.transiciones.get('Ɛ')){
+                    transicion_epsilon(s);
+                }
+            }
+        }
     }
 
             

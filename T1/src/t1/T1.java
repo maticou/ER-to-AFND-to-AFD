@@ -29,6 +29,8 @@ public class T1 {
         
         afnd = new AFND(parseo.getAux());
         afnd.imprimir_automata();
+        
+        AFD afd = new AFD(afnd.automata);
     }
     
     
