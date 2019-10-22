@@ -5,6 +5,7 @@
  */
 package t1;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -13,11 +14,16 @@ import java.util.Scanner;
  */
 public class T1 {
     static public AFND afnd;
+    static public AFD afd;
+    static ArrayList<String> alfabeto;
+    static ArrayList<Integer> listaEstados;
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        alfabeto = new ArrayList();
+        listaEstados = new ArrayList();
         Scanner scanner = new Scanner(System.in);
         System.out.println("Ingrese una ER:");
         System.out.println("Se permiten las letras del alfabeto inglés en mayúsculas o minúsculas. Los operadores son .,|,*");                
@@ -27,31 +33,13 @@ public class T1 {
         
         System.out.println("Expresion nueva: " + parseo.getAux());
         
-        afnd = new AFND(parseo.getAux());
+        afnd = new AFND(parseo.getAux());        
         afnd.imprimir_automata();
-    }
-    
-    
-    
-    static public void concatenacion(String texto1, String texto2){
-        System.out.println("Concatenación");
-        System.out.println(texto1);
-        System.out.println(".");
-        System.out.println(texto2);
-    }
-    
-    static public void union(String texto1, String texto2){
-       System.out.println("Unión"); 
-       System.out.println(texto1);
-        System.out.println("|");
-        System.out.println(texto2);
-    }
-    
-    static public void estrella(String texto1, String texto2){
-        System.out.println("Estrella de Kleene");
-        System.out.println(texto1);
-        System.out.println("*");
-        System.out.println(texto2);
-    }
-    
+        
+        alfabeto = afnd.getAlfabeto();
+        listaEstados = afnd.getListaEstados();
+        
+        afd = new AFD(alfabeto, listaEstados);
+        afd.transformarAFND_AFD(afnd.getAutomata());
+    }    
 }

@@ -16,10 +16,16 @@ public class AFND {
     Automata automata;
     Stack<Automata> pila = new Stack();
     String expresion;
+    ArrayList<String> alfabeto;
+    ArrayList<Integer> listaEstados;
     
     AFND(String expresion){
+        this.alfabeto = new ArrayList();
+        this.listaEstados = new ArrayList();        
         this.expresion = expresion;
+        setAlfabeto();        
         this.generar_automata();
+        setListaEstados();
     }
     
     void generar_automata(){
@@ -46,11 +52,17 @@ public class AFND {
     void imprimir_automata(){
         System.out.println("AFND");
         System.out.printf("K = {");
-        for(Estado estado: this.automata.estados){
-            System.out.printf("q"+estado.id+" ,");
+        for(int i=0;i<this.listaEstados.size();i++){            
+            if(this.listaEstados.size()-1 == i){
+                System.out.printf("q"+getListaEstados().get(i));
+            }else{
+                System.out.printf("q"+getListaEstados().get(i)+" ,");
+            }            
         }
         System.out.printf("}");
         System.out.println(" ");
+        System.out.printf("Sigma = ");
+        System.out.println(getAlfabeto());        
         System.out.println("Delta");
         
         for(Estado estado: this.automata.estados){
@@ -174,5 +186,38 @@ public class AFND {
         }
         
         this.pila.push(kleene);
+    }
+
+    public Automata getAutomata() {
+        return this.automata;
+    }   
+    
+    public String getExpresion() {
+        return expresion;
+    }
+    
+    public ArrayList<String> getAlfabeto() {
+        return alfabeto;
+    }
+
+    public void setAlfabeto() {        
+        for (Character c: getExpresion().toCharArray()){                             
+            if (c != '|' && c != '*' && c != '.' && c != '_' && c!='0'){
+                if(!this.alfabeto.contains(Character.toString(c))){
+                    this.alfabeto.add(Character.toString(c));
+                }             
+            }
+        }        
+    }
+    
+    public ArrayList<Integer> getListaEstados(){
+        return this.listaEstados;
+    }
+    
+    private void setListaEstados() {
+        for(int i=0;i<this.automata.estados.size();i++){
+            Estado estado = this.automata.estados.get(i);            
+            this.listaEstados.add(estado.id);
+        }
     }
 }
