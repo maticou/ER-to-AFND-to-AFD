@@ -39,6 +39,6 @@ public class T1 {
         alfabeto = afnd.getAlfabeto();
         listaEstados = afnd.getListaEstados();
         
-        afd = new AFD(afnd.automata);        
+        afd = new AFD(afnd.automata, alfabeto);
     }    
 }
