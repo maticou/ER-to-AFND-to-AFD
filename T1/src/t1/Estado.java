@@ -16,6 +16,8 @@ public class Estado {
     int id;
     boolean inicio;
     boolean fin;
+    ArrayList<Estado> estados;
+    
     HashMap<Character, ArrayList<Estado>> transiciones;
     
     Estado(int id, boolean inicio, boolean fin){
@@ -23,6 +25,7 @@ public class Estado {
         this.inicio = inicio;
         this.fin = fin;
         transiciones = new HashMap<Character, ArrayList<Estado>>();
+        estados = new ArrayList<Estado>();
     }
     
     void setID( int id){
