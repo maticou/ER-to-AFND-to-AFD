@@ -84,8 +84,15 @@ public class AFD {
         }
         System.out.printf("}");
         System.out.println(" ");
-        System.out.printf("Sigma = ");       
-        System.out.println("Delta");
+        System.out.printf("Sigma = [ ");           
+        for(int n=0;n<this.alfabeto.size();n++){
+            if(this.alfabeto.size()-1 == n){
+                System.out.println(this.alfabeto.get(n) + " ]");
+            }else{
+                System.out.printf(this.alfabeto.get(n) + ", ");
+            }            
+        }
+        System.out.println("Delta :");
         
         for(Estado estado: this.listaEstados){
             estado.imprimir_transiciones();

@@ -63,7 +63,7 @@ public class AFND {
         System.out.println(" ");
         System.out.printf("Sigma = ");
         System.out.println(getAlfabeto());        
-        System.out.println("Delta");        
+        System.out.println("Delta :");        
         for(Estado estado: this.automata.estados){
             estado.imprimir_transiciones();
         }        
