@@ -39,6 +39,8 @@ public class AFD {
         this.pila_estados = new Stack();
         
         this.afnd = automata;
+        //Se obtienen todos los estados a los que se puede llegar desde el estado 0
+        //usando solo transiciones epsilon
         obtener_eclosure();
         
         //se crea el estado inicial para el afd y un estado sumidero
@@ -48,15 +50,21 @@ public class AFD {
         estado_inicial.estados.addAll(pila_estados);
         pila_estados.clear();
         
+        //se agregan los estados creados prevamente a la lista de estados que representara nuestro AFD
         this.listaEstados.add(estado_inicial);
         this.listaEstados.add(sumidero);
         
+        //se agrega el estado inicial a la pila de la cual obtendremos los estados
+        //necesarios para calcular los nuevos estados del AFD
         this.pila_estados.push(estado_inicial);
+        
         
         while(this.pila_estados.empty() != true){
             this.generar_estados_afd(this.pila_estados.pop());
         }
         
+        //se modifican los id de cada estado creado, para que 
+        //la funcion delta que se imprimira sea mas entendible.
         for(int i = 0; i< listaEstados.size(); i++){
             listaEstados.get(i).id = i;
         }
@@ -64,6 +72,7 @@ public class AFD {
         imprimir_afd();
     }          
     
+    //imprime de manera estandar el AFD
     void imprimir_afd(){
         System.out.println("AFD");
         System.out.printf("K = {");
@@ -84,10 +93,15 @@ public class AFD {
         }
     }
     
+    //convierte las transiciones de un estado a los estados y trnsiciones que 
+    //se utilizaran para armar el AFD.
     void generar_estados_afd(Estado estado){
         for(String string : this.alfabeto){
             ArrayList<Estado> transiciones =  new ArrayList<Estado>();
             
+            //se obtienen todos los estados a los que accede un 
+            //estado especifico usando una letra del alfabeto y
+            //transiciones epsilon.
             for(Estado s : estado.estados ){
                 if(s.transiciones.containsKey(string.charAt(0)) == true){
                     for(Estado aux: s.transiciones.get(string.charAt(0))){
@@ -96,6 +110,9 @@ public class AFD {
                 }
             }
             
+            //si el estado tiene transiciones con el caracter especificado
+            //se agrega a la lista de estados del AFD y a la pila para que se generen 
+            // nuevos estados y trancisiones a traves de este nuevo estado.
             if(transiciones.isEmpty() == false){
                 Estado nuevo_estado = new Estado(0, false, false);
                 nuevo_estado.estados.addAll(transiciones);
@@ -110,11 +127,16 @@ public class AFD {
                 transiciones.clear();
             }
             else{
+                //si el estado no tiene transiciones con algun caracter del alfabeto
+                // entonces se le agregan transiciones a un estado sumidero usando 
+                //el caracter especificado.
                 estado.agregarTransicion(string.charAt(0), this.sumidero);
             }
         }
     }
     
+    //obtiene todas las transiciones epsilon de un estado especifico y las almacena en 
+    //un arraylist que contiene todos los estados que componen un estado del AFD
     void obtener_transiciones_estado(Estado estado, ArrayList<Estado> transiciones){
         if(transiciones.contains(estado) == false){
             transiciones.add(estado);
@@ -127,6 +149,8 @@ public class AFD {
         }
     }
     
+    //verifica si es que ya se ha analizado un estado previamente y se agrega 
+    // a la lista de estados en caso de que no se haya analizado
     boolean verificar_existencia_estado(Estado estado){
         for(Estado s: this.listaEstados){
             if(s.estados.containsAll(estado.estados) == true){
@@ -141,6 +165,8 @@ public class AFD {
         transicion_epsilon(afnd.inicio);
     }
 
+    //funcion que obtiene los estados a los que se puede llegar desde el estado 0
+    //usando solo transiciones epsilon
     void transicion_epsilon(Estado estado){
 
         if(pila_estados.contains(estado) == false){
