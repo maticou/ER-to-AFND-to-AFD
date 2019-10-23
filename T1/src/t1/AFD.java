@@ -27,9 +27,7 @@ public class AFD {
     Estado estado_inicial;
     Estado sumidero;
     
-    public AFD(Automata automata, ArrayList<String> alfabeto) {
-        
-        //this.transicion = new Transicion();
+    public AFD(Automata automata, ArrayList<String> alfabeto) {                
 
         this.listaEstados = new ArrayList();
         this.listaTransiciones = new ArrayList();
@@ -74,13 +72,14 @@ public class AFD {
     
     //imprime de manera estandar el AFD
     void imprimir_afd(){
+        System.out.println("");
         System.out.println("AFD");
         System.out.printf("K = {");
         for(int i=0;i<this.listaEstados.size();i++){            
             if(this.listaEstados.size()-1 == i){
-                System.out.printf("q"+listaEstados.get(i));
+                System.out.printf("q"+listaEstados.get(i).id);
             }else{
-                System.out.printf("q"+listaEstados.get(i)+" ,");
+                System.out.printf("q"+listaEstados.get(i).id+" ,");
             }            
         }
         System.out.printf("}");
@@ -91,9 +90,22 @@ public class AFD {
         for(Estado estado: this.listaEstados){
             estado.imprimir_transiciones();
         }
+        System.out.println("s = { q" + this.estado_inicial.id + " }");
+        System.out.printf("F = { ");
+        for(int i=0;i<this.listaEstados.size();i++){
+            if(this.listaEstados.get(i).fin){
+                if(this.finales.size()-1 == i){
+                    System.out.printf("q" + this.finales.get(i));
+                }else{
+                    System.out.printf("q" + this.finales.get(i) + ",");
+                }
+            }             
+        }
+        System.out.printf("}");
+        System.out.println("");
     }
     
-    //convierte las transiciones de un estado a los estados y trnsiciones que 
+    //convierte las transiciones de un estado a los estados y transiciones que 
     //se utilizaran para armar el AFD.
     void generar_estados_afd(Estado estado){
         for(String string : this.alfabeto){

@@ -63,11 +63,21 @@ public class AFND {
         System.out.println(" ");
         System.out.printf("Sigma = ");
         System.out.println(getAlfabeto());        
-        System.out.println("Delta");
-        
+        System.out.println("Delta");        
         for(Estado estado: this.automata.estados){
             estado.imprimir_transiciones();
+        }        
+        System.out.println("s = { q" + this.automata.inicio.id + " }");
+        System.out.printf("F = { ");
+        for(int i=0;i<this.automata.finales.size();i++){
+            if(this.automata.finales.size()-1 == i){
+                System.out.printf("q" + this.automata.finales.get(i).id);
+            }else{
+                System.out.printf("q" + this.automata.finales.get(i).id + ",");
+            }             
         }
+        System.out.printf("}");
+        System.out.println("");
     }
     
     void generar_automata_basico(char c){
