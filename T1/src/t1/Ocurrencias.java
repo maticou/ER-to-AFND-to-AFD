@@ -26,37 +26,31 @@ public class Ocurrencias {
         imprimirOcurrencias(texto);
     }         
     
-    private void recorrerAutomata() {
-        int i=0;
-        Estado estado = this.afd.estado_inicial;
-        
-        while(i < this.texto.length()){
-            if(estado.transiciones.get(this.texto.charAt(i)) == null){
-                System.out.println("null");
-                i++;
-            }else{
-                for(int j=0; j<estado.transiciones.get(this.texto.charAt(i)).size();j++){
-                    Estado estadoAux = estado.transiciones.get(this.texto.charAt(i)).get(j);
-                    System.out.println("estado q"+estadoAux.id);
-                    System.out.println("letra "+this.texto.charAt(i));
-                    if(estadoAux.fin){
-                        this.indicesFinales.add(i);
-                        System.out.println("FIN");
-                    }                    
+    private void recorrerAutomata() {                
+        for(int i=0;i<this.texto.length();i++){
+            Estado estado = this.afd.estado_inicial;
+            for(int k=i;k<this.texto.length();k++){
+                if(estado.transiciones.get(this.texto.charAt(k)) != null){
+                    for(int j=0; j<estado.transiciones.get(this.texto.charAt(k)).size();j++){
+                        Estado estadoAux = estado.transiciones.get(this.texto.charAt(k)).get(j);
+                        if(estadoAux.fin){
+                            if(!this.indicesFinales.contains(k)){
+                                this.indicesFinales.add(k);
+                            }                            
+                        }  
+                        estado = estadoAux;
+                    }
                 }
-                System.out.println("NO null");
-                i++;
-            }            
+            }                
         }
     }
 
     private void imprimirOcurrencias(String texto) {
-        System.out.println("Texto: " + texto);
-        System.out.println("this.indicesFinales.size() "+this.indicesFinales.size());
-        for(int i=0; i<this.indicesFinales.size();i++){
-            System.out.printf("Ocurrencias: ");
-            if(i<this.indicesFinales.size()-1){
-                System.out.print(this.indicesFinales.get(i) + 1);
+        System.out.println("Texto: " + texto);       
+        System.out.printf("Ocurrencias: ");
+        for(int i=0; i<this.indicesFinales.size();i++){            
+            if(i == this.indicesFinales.size()-1){
+                System.out.print(this.indicesFinales.get(i) + 1 + " ");
             }else{
                 System.out.print(this.indicesFinales.get(i) + 1 + ", ");
             }            
