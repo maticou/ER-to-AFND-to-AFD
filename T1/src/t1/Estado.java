@@ -55,7 +55,7 @@ public class Estado {
     void imprimir_transiciones(){
         for (Character i : transiciones.keySet()) {
             for(Estado estado: transiciones.get(i)){
-                System.out.println("{"+" q"+ this.id+ ", " + i + "," + "q" +estado.id + " }");
+                System.out.println("{"+" q"+ this.id+ ", " + i + "," + " q" +estado.id + " }");
             }
         }
     }

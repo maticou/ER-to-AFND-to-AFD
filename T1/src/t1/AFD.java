@@ -79,7 +79,7 @@ public class AFD {
     void imprimir_afd(){
         System.out.println("");
         System.out.println("AFD");
-        System.out.printf("K = {");
+        System.out.printf("K = { ");
         for(int i=0;i<this.listaEstados.size();i++){            
             if(this.listaEstados.size()-1 == i){
                 System.out.printf("q"+listaEstados.get(i).id);
@@ -87,12 +87,12 @@ public class AFD {
                 System.out.printf("q"+listaEstados.get(i).id+" ,");
             }            
         }
-        System.out.printf("}");
+        System.out.printf(" }");
         System.out.println(" ");
-        System.out.printf("Sigma = [ ");           
+        System.out.printf("Sigma = [");           
         for(int n=0;n<this.alfabeto.size();n++){
             if(this.alfabeto.size()-1 == n){
-                System.out.println(this.alfabeto.get(n) + " ]");
+                System.out.println(this.alfabeto.get(n) + "]");
             }else{
                 System.out.printf(this.alfabeto.get(n) + ", ");
             }            
@@ -113,7 +113,7 @@ public class AFD {
                 }
             }             
         }
-        System.out.printf("}");
+        System.out.printf(" }");
         System.out.println("");
     }
     

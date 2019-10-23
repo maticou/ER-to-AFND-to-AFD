@@ -67,8 +67,9 @@ public class AFND {
     }
     
     void imprimir_automata(){
+        System.out.println("");
         System.out.println("AFND");
-        System.out.printf("K = {");
+        System.out.printf("K = { ");
         for(int i=0;i<this.listaEstados.size();i++){            
             if(this.listaEstados.size()-1 == i){
                 System.out.printf("q"+getListaEstados().get(i));
@@ -76,7 +77,7 @@ public class AFND {
                 System.out.printf("q"+getListaEstados().get(i)+" ,");
             }            
         }
-        System.out.printf("}");
+        System.out.printf(" }");
         System.out.println(" ");
         System.out.printf("Sigma = ");
         System.out.println(getAlfabeto());        
@@ -93,7 +94,7 @@ public class AFND {
                 System.out.printf("q" + this.automata.finales.get(i).id + ",");
             }             
         }
-        System.out.printf("}");
+        System.out.printf(" }");
         System.out.println("");
     }
     

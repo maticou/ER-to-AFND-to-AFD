@@ -30,15 +30,15 @@ public class T1 {
         String texto = scanner.nextLine(); 
         
         Parser parseo = new Parser(expresion);
-        
+
         afnd = new AFND(parseo.getAux());        
         afnd.imprimir_automata();
-        
+
         alfabeto = afnd.getAlfabeto();
         listaEstados = afnd.getListaEstados();
-        
+
         afd = new AFD(afnd.automata, alfabeto);
-        
-        ocurrencias = new Ocurrencias(texto);        
+
+        ocurrencias = new Ocurrencias(texto, afd);                      
     }    
 }
