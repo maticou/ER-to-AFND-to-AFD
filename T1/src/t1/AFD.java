@@ -160,8 +160,8 @@ public class AFD {
         if(transiciones.contains(estado) == false){
             transiciones.add(estado);
             
-            if(estado.transiciones.containsKey('Ɛ') == true){
-                for(Estado s : estado.transiciones.get('Ɛ')){
+            if(estado.transiciones.containsKey('_') == true){
+                for(Estado s : estado.transiciones.get('_')){
                     obtener_transiciones_estado(s, transiciones);
                 }
             }   
@@ -191,8 +191,8 @@ public class AFD {
         if(pila_estados.contains(estado) == false){
             this.pila_estados.push(estado);
 
-            if(estado.transiciones.get('Ɛ') != null){
-                for(Estado s: estado.transiciones.get('Ɛ')){
+            if(estado.transiciones.get('_') != null){
+                for(Estado s: estado.transiciones.get('_')){
                     transicion_epsilon(s);
                 }
             }

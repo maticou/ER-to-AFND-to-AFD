@@ -104,11 +104,11 @@ public class AFND {
         Estado inicio = new Estado(0, true, false);
         Estado fin = new Estado(0, false, true);
         
-        inicio.agregarTransicion('Ɛ', automata1.inicio);
-        inicio.agregarTransicion('Ɛ', automata2.inicio);
+        inicio.agregarTransicion('_', automata1.inicio);
+        inicio.agregarTransicion('_', automata2.inicio);
         
-        automata1.finales.get(0).agregarTransicion('Ɛ', fin);
-        automata2.finales.get(0).agregarTransicion('Ɛ', fin);
+        automata1.finales.get(0).agregarTransicion('_', fin);
+        automata2.finales.get(0).agregarTransicion('_', fin);
         
         //se agregan los estados que conformaran el nuevo automata 
         //para luego modificar sus id
@@ -144,7 +144,7 @@ public class AFND {
         automata1 = this.pila.pop();
         
         //se crea la transicion entre los dos automatas.
-        automata1.finales.get(0).agregarTransicion('Ɛ', automata2.inicio);
+        automata1.finales.get(0).agregarTransicion('_', automata2.inicio);
         
         //se agregan todos los estados al automata de concatenacion.
         for(Estado estado: automata1.estados){
@@ -174,11 +174,11 @@ public class AFND {
         Estado inicial = new Estado(0, true, false);
         Estado fin = new Estado(0, false, true);
         
-        inicial.agregarTransicion('Ɛ', automata.inicio);
-        inicial.agregarTransicion('Ɛ', fin);
+        inicial.agregarTransicion('_', automata.inicio);
+        inicial.agregarTransicion('_', fin);
         
-        automata.finales.get(0).agregarTransicion('Ɛ', fin);
-        automata.finales.get(0).agregarTransicion('Ɛ', automata.inicio);
+        automata.finales.get(0).agregarTransicion('_', fin);
+        automata.finales.get(0).agregarTransicion('_', automata.inicio);
         
         kleene.setEstadoInicio(inicial);
         kleene.agregarEstadoFinal(fin);
