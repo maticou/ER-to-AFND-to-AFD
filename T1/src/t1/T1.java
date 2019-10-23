@@ -15,6 +15,7 @@ import java.util.Scanner;
 public class T1 {
     static public AFND afnd;
     static public AFD afd;
+    static public Ocurrencias ocurrencias;
     static ArrayList<String> alfabeto;
     static ArrayList<Integer> listaEstados;
     /**
@@ -24,14 +25,11 @@ public class T1 {
         // TODO code application logic here
         alfabeto = new ArrayList();
         listaEstados = new ArrayList();
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Ingrese una ER:");
-        System.out.println("Se permiten las letras del alfabeto inglés en mayúsculas o minúsculas. Los operadores son .,|,*");                
+        Scanner scanner = new Scanner(System.in);       
         String expresion = scanner.nextLine(); 
+        String texto = scanner.nextLine(); 
         
         Parser parseo = new Parser(expresion);
-        
-        System.out.println("Expresion nueva: " + parseo.getAux());
         
         afnd = new AFND(parseo.getAux());        
         afnd.imprimir_automata();
@@ -40,5 +38,7 @@ public class T1 {
         listaEstados = afnd.getListaEstados();
         
         afd = new AFD(afnd.automata, alfabeto);
+        
+        ocurrencias = new Ocurrencias(texto);        
     }    
 }

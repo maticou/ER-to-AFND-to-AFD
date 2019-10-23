@@ -10,9 +10,15 @@ package t1;
  * @author matiassebastianparra
  */
 public class Ocurrencias {
-
-    public Ocurrencias() {
-        
-    }          
     
+    String texto;
+    
+    public Ocurrencias(String texto) {
+        this.texto = texto;
+        imprimirOcurrencias(texto);
+    }              
+
+    private void imprimirOcurrencias(String texto) {
+        System.out.println("Texto: " + texto);
+    }    
 }
