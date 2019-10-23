@@ -47,6 +47,23 @@ public class AFND {
         }
         
         this.automata = this.pila.pop();
+        
+        //Se reinician los valores boolean que indican si el estado es de inicio 
+        // o de aceptacion que tiene cada estado para luego asignarlos
+        //de manera correcta
+        for(Estado s: this.automata.estados){
+            s.inicio = false;
+            s.fin = false;
+        }
+        
+        //se indica mediante un boolean el estado de inicio del automata generado
+        this.automata.inicio.setInicio(true);
+        
+        //se indican los estados finales correspondientes del automata mediante 
+        //booleans
+        for(Estado s: this.automata.finales){
+            s.setFin(true);
+        }
     }
     
     void imprimir_automata(){

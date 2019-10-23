@@ -45,6 +45,11 @@ public class AFD {
         estado_inicial = new Estado(0, true, false);
         sumidero = new Estado(1, false, false);
         
+        //se agregan los ciclos correspondientes al sumidero
+        for(String string: this.alfabeto){
+            sumidero.agregarTransicion(string.charAt(0), sumidero);
+        }
+        
         estado_inicial.estados.addAll(pila_estados);
         pila_estados.clear();
         
@@ -101,10 +106,10 @@ public class AFD {
         System.out.printf("F = { ");
         for(int i=0;i<this.listaEstados.size();i++){
             if(this.listaEstados.get(i).fin){
-                if(this.finales.size()-1 == i){
-                    System.out.printf("q" + this.finales.get(i));
+                if(this.listaEstados.size()-1 == i){
+                    System.out.printf("q" + this.listaEstados.get(i).id);
                 }else{
-                    System.out.printf("q" + this.finales.get(i) + ",");
+                    System.out.printf("q" + this.listaEstados.get(i).id + ",");
                 }
             }             
         }
@@ -137,6 +142,8 @@ public class AFD {
                 nuevo_estado.estados.addAll(transiciones);
                 
                 estado.agregarTransicion(string.charAt(0), nuevo_estado);
+                
+                nuevo_estado.verificar_estado_final();
                 
                 if(verificar_existencia_estado(nuevo_estado) == false){
                     this.listaEstados.add(nuevo_estado);

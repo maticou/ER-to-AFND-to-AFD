@@ -16,6 +16,7 @@ public class Estado {
     int id;
     boolean inicio;
     boolean fin;
+    //lista de estados que componen el nuevo estado del AFD
     ArrayList<Estado> estados;
     
     HashMap<Character, ArrayList<Estado>> transiciones;
@@ -55,6 +56,17 @@ public class Estado {
         for (Character i : transiciones.keySet()) {
             for(Estado estado: transiciones.get(i)){
                 System.out.println("{"+" q"+ this.id+ ", " + i + "," + "q" +estado.id + " }");
+            }
+        }
+    }
+    
+    //si el conjunto de estados que compone el estado del AFD
+    //contiene un estado final del AFND, entonces el estado pasa a ser un
+    //estado final.
+    void verificar_estado_final(){
+        for(Estado estado : this.estados){
+            if(estado.fin == true){
+                this.fin = true;
             }
         }
     }
