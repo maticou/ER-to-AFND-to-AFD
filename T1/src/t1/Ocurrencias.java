@@ -43,7 +43,8 @@ public class Ocurrencias {
         }
     }
 
-    private void imprimirOcurrencias(String texto) {    
+    private void imprimirOcurrencias(String texto) {   
+        System.out.println("");        
         System.out.printf("Ocurrencias: ");
         for(int i=0; i<this.indicesFinales.size();i++){            
             if(i == this.indicesFinales.size()-1){
