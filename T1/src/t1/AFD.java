@@ -15,10 +15,8 @@ import java.util.Stack;
 public class AFD {
     
     Estado estado;
-    Transicion transicion;
 
     ArrayList<Estado> listaEstados;
-    ArrayList<Transicion> listaTransiciones;
     ArrayList<String> alfabeto;
     ArrayList<String> inicios;
     ArrayList<String> finales;
@@ -30,7 +28,6 @@ public class AFD {
     public AFD(Automata automata, ArrayList<String> alfabeto) {                
 
         this.listaEstados = new ArrayList();
-        this.listaTransiciones = new ArrayList();
         this.alfabeto = alfabeto;
         this.inicios = new ArrayList();
         this.finales = new ArrayList();
