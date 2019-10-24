@@ -31,22 +31,19 @@ public class Ocurrencias {
             Estado estado = this.afd.estado_inicial;
             for(int k=i;k<this.texto.length();k++){
                 if(estado.transiciones.get(this.texto.charAt(k)) != null){
-                    for(int j=0; j<estado.transiciones.get(this.texto.charAt(k)).size();j++){
-                        Estado estadoAux = estado.transiciones.get(this.texto.charAt(k)).get(j);
-                        if(estadoAux.fin){
-                            if(!this.indicesFinales.contains(k)){
-                                this.indicesFinales.add(k);
-                            }                            
-                        }  
-                        estado = estadoAux;
-                    }
+                    Estado estadoAux = estado.transiciones.get(this.texto.charAt(k)).get(0);
+                    if(estadoAux.fin){
+                        if(!this.indicesFinales.contains(k)){
+                            this.indicesFinales.add(k);
+                        }                            
+                    }  
+                    estado = estadoAux;
                 }
             }                
         }
     }
 
-    private void imprimirOcurrencias(String texto) {
-        System.out.println("Texto: " + texto);       
+    private void imprimirOcurrencias(String texto) {    
         System.out.printf("Ocurrencias: ");
         for(int i=0; i<this.indicesFinales.size();i++){            
             if(i == this.indicesFinales.size()-1){
@@ -55,5 +52,6 @@ public class Ocurrencias {
                 System.out.print(this.indicesFinales.get(i) + 1 + ", ");
             }            
         }
+        System.out.println("");
     }    
 }

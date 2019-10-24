@@ -27,7 +27,8 @@ public class T1 {
         listaEstados = new ArrayList();
         Scanner scanner = new Scanner(System.in);       
         String expresion = scanner.nextLine(); 
-        String texto = scanner.nextLine(); 
+        String texto1 = scanner.nextLine(); 
+        String texto2 = texto1.replace("-", "");
         
         Parser parseo = new Parser(expresion);
 
@@ -39,6 +40,6 @@ public class T1 {
 
         afd = new AFD(afnd.automata, alfabeto);
 
-        ocurrencias = new Ocurrencias(texto, afd);                      
+        ocurrencias = new Ocurrencias(texto2, afd);                      
     }    
 }
